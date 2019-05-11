@@ -5,24 +5,13 @@ int button2 = 2;
 int button3 = 3;
 int button4 = 4;
 int button5 = 5;
-int a = 8, b = 9, c = 10, d = 11, d = 12, e = 13;
-LiquidCrystal lcd = (a,b,c,d,e);
-char Cuore = 0;
+int vite = 1;
+ int a = 8, b = 9, c = 10, d = 11, e = 12, f = 13;
+LiquidCrystal lcd(a,b,c,d,e,f);
 
-void setup() {
-  // put your setup code here, to run once:
-  pinMode(button1, OUTPUT);
-  pinMode(button2, OUTPUT);
-  pinMode(button3, OUTPUT);
-  pinMode(button4, OUTPUT);
-  pinMode(button5, OUTPUT);
-  lcd.createChar(0, Cuore);
-  lcd.begin(16,2);
-  lcd.write(byte(0));
-}
 
 byte Cuore[8] = {
-        B00000,
+       B00000,
         B01010,
         B11111,
         B11111,
@@ -33,9 +22,46 @@ byte Cuore[8] = {
 };
  
 
+void setup() {
+  digitalWrite(button1, OUTPUT);
+  digitalWrite(button2, OUTPUT);
+  digitalWrite(button3, OUTPUT);
+  digitalWrite(button4, OUTPUT);
+  digitalWrite(button5, OUTPUT);
 
+  lcd.begin(16, 2);
+
+  lcd.setCursor(0,0);
+  lcd.print("Quante vite?");
+  while(digitalRead(button3) == LOW)
+  {
+   ViteUtente();
+   }
+  // put your setup code here, to run once:
+ lcd.clear();
+lcd.createChar(0, Cuore);
+lcd.setCursor(15,0);  //Cuore
+  lcd.write(byte(0));
+}
+
+int ViteUtente(){
+  if(digitalRead(button1) == LOW){
+    vite++;
+     lcd.setCursor(0,1);
+    lcd.print(vite);
+  }
+  if(digitalRead(button2) == LOW){
+  vite--;
+  if(vite < 1){
+    vite = 1;
+  }
+  lcd.setCursor(0,1);
+  lcd.print(vite);
+ }
+}
 
 void loop() {
+  
   // put your main code here, to run repeatedly:
 
 }
