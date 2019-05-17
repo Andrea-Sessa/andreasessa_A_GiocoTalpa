@@ -6,6 +6,8 @@ int button3 = 3;
 int button4 = 4;
 int button5 = 5;
 int vite = 1;
+int premuto;
+int lasciato;
  int a = 8, b = 9, c = 10, d = 11, e = 12, f = 13;
 LiquidCrystal lcd(a,b,c,d,e,f);
 
@@ -32,25 +34,41 @@ void setup() {
   lcd.begin(16, 2);
 
   lcd.setCursor(0,0);
-  lcd.print("Quante vite?");
+  lcd.print("Quante vite? ");
   while(digitalRead(button3) == LOW)
   {
+    
    ViteUtente();
+   lcd.setCursor(0,1);
+   lcd.print(vite);
    }
+   
   // put your setup code here, to run once:
  lcd.clear();
+ lcd.setCursor(0,1);
+  lcd.print(vite);
 lcd.createChar(0, Cuore);
 lcd.setCursor(15,0);  //Cuore
   lcd.write(byte(0));
 }
 
-int ViteUtente(){
-  if(digitalRead(button1) == LOW){
-    vite++;
-     lcd.setCursor(0,1);
-    lcd.print(vite);
+void ViteUtente(){
+  
+  if(digitalRead(button1) == HIGH){
+     premuto = millis();
+  if( digitalRead(button1) == LOW){
+     lasciato = millis();
   }
-  if(digitalRead(button2) == LOW){
+  if(lasciato- premuto< 1000)
+  {
+    vite++;
+    }
+    else
+    {
+      
+    }
+  }
+   if(digitalRead(button2) == HIGH){
   vite--;
   if(vite < 1){
     vite = 1;
